@@ -5,40 +5,61 @@ $bg-accent: #e7e8e9;
 $disabled: #9c9c9c;
 $foreground: #2d264b;
 
-
-body{
-    font-family: sans-serif;
-    background: linear-gradient(0deg, $primary 0.03%, $accent);
-    color: $foreground;
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
-    padding: 0 30px;
-    height: 100vh;
+body {
+  font-family: sans-serif;
+  background: linear-gradient(0deg, $primary 0.03%, $accent);
+  color: $foreground;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0 30px;
+  height: 100vh;
 }
 
-.quiz_container{
-    width: 500px;
-    background: $bg;
-    border-radius: 4px;
-    margin-top: 100px;
-    padding: 30px 60px;
-    box-sizing: border-box;
+.quiz_container {
+  width: 500px;
+  background: $bg;
+  border-radius: 4px;
+  margin-top: 100px;
+  padding: 30px 60px;
+  box-sizing: border-box;
 
-    .active_question_no{
-        font-size: 32px;
-        font-weight: 500;
-        color: $primary;
-    }
+  .active_question_no {
+    font-size: 32px;
+    font-weight: 500;
+    color: $primary;
+  }
 
-    .total_question{
-        font-size: 16px;
-        font-weight: 500;
-        color: $disabled;
+  .total_question {
+    font-size: 16px;
+    font-weight: 500;
+    color: $disabled;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  ul {
+    margin-top: 20px;
+    margin-left: -40px;
+    li {
+      text-decoration: none;
+      list-style: none;
+      color: $foreground;
+      font-size: 16px;
+      background: $bg;
+      border: 1px solid $disabled;
+      border-radius: 16px;
+      padding: 11px;
+      margin-top: 15px;
+      cursor: pointer;
     }
-    h2{
-        font-size: 20px;
-        font-weight: 500;
-        margin: 0;
+    .selected_answer{
+      background: $primary;
+      border: 1px solid $accent;
+      color: $bg;
     }
+  }
 }
