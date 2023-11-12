@@ -1,5 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { resultInitialState } from "./constants";
+
+const HomeScreen = ({ onStartClick }) => (
+  <div className="home_screen">
+    <h1>Quizzz</h1>
+    <button onClick={onStartClick}>Start quiz</button>
+  </div>
+);
 
 const Quiz = ({ questions }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -7,7 +14,7 @@ const Quiz = ({ questions }) => {
   const [answer, setAnswer] = useState(null);
   const [result, setResult] = useState(resultInitialState);
   const [showResult, setShowResult] = useState(false);
-
+  const [quizStarted, setQuizStarted] = useState(false);
 
   const { question, choices, correctAnswer } = questions[currentQuestion];
 
@@ -34,60 +41,67 @@ const Quiz = ({ questions }) => {
             wrongAnswers: prev.wrongAnswers + 1,
           }
     );
-    if (currentQuestion !== questions.length - 1){
+    if (currentQuestion !== questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
       setCurrentQuestion(0);
       setShowResult(true);
     }
-
   };
 
   const onTryAgain = () => {
     setResult(resultInitialState);
     setShowResult(false);
-  }
+  };
+
+  const onStartClick = () => {
+    setQuizStarted(true);
+  };
 
   return (
     <div className="quiz_container">
-      {!showResult ? (      <>
-        <span className="active_question_no">{currentQuestion + 1}</span>
-        <span className="total_question">/{questions.length}</span>
-        <h2>{question}</h2>
-        <ul>
-          {choices.map((answer, index) => (
-            <li
-              onClick={() => onAnswerClick(answer, index)}
-              key={answer}
-              className={answerIdx === index ? "selected_answer" : null}
-            >
-              {answer}
-            </li>
-          ))}
-        </ul>
-        <div className="footer">
-          <button onClick={onClickNext} disabled={answerIdx === null}>
-            {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
-          </button>
-        </div>
-      </>) : <div className="result">
-        <h3>Result</h3>
-        <p>
+      {!quizStarted ? (
+        <HomeScreen onStartClick={onStartClick} />
+      ) : !showResult ? (
+        <>
+          <span className="active_question_no">{currentQuestion + 1}</span>
+          <span className="total_question">/{questions.length}</span>
+          <h2>{question}</h2>
+          <ul>
+            {choices.map((answer, index) => (
+              <li
+                onClick={() => onAnswerClick(answer, index)}
+                key={answer}
+                className={answerIdx === index ? "selected_answer" : null}
+              >
+                {answer}
+              </li>
+            ))}
+          </ul>
+          <div className="footer">
+            <button onClick={onClickNext} disabled={answerIdx === null}>
+              {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
+            </button>
+          </div>
+        </>
+      ) : (
+        <div className="result">
+          <h3>Result</h3>
+          <p>
             Total questions : <span>{questions.length}</span>
-        </p>
-        <p>
+          </p>
+          <p>
             Total Score : <span>{result.score}</span>
-        </p>
-        <p>
+          </p>
+          <p>
             Correct Answers : <span>{result.correctAnswers}</span>
-        </p>
-        <p>
+          </p>
+          <p>
             Wrong Answers : <span>{result.wrongAnswers}</span>
-        </p>
-        <button onClick={onTryAgain}>Try again</button>
+          </p>
+          <button onClick={onTryAgain}>Try again</button>
         </div>
-      }
-
+      )}
     </div>
   );
 };
